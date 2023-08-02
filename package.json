@@ -1,0 +1,35 @@
+{
+  "name": "arrowjs-example",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Arrow.js example",
+  "main": "index.js",
+  "scripts": {
+    "serve": "http-server ./dist -c-1 -p 3000 -a localhost",
+    "watch": "rollup --config --watch",
+    "dev": "concurrently \"npm run serve\" \"npm run watch\"",
+    "build": "rollup --config",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "snapperbay4453@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/plugin-transform-runtime": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/runtime-corejs3": "^7.22.6",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^25.0.3",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "rollup": "^3.27.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4"
+  },
+  "dependencies": {
+    "@arrow-js/core": "^1.0.0-alpha.9",
+    "core-js": "^3.32.0",
+    "http-server": "^14.1.1"
+  }
+}
