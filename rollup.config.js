@@ -6,6 +6,10 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 
+import postcss from 'rollup-plugin-postcss';
+import cssimport from 'postcss-import';
+import autoprefixer from 'autoprefixer';
+
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
@@ -56,10 +60,16 @@ export default pages.map(page => ({
       extensions: targetExtensions,
     }),
     peerDepsExternal(),
+    postcss({
+      plugins: [
+        cssimport(),
+        autoprefixer(),
+      ]
+    }),
     terser(),
     copy({
       targets: [
-        { src: ['./src' + pagesSubpath + '/*', '!**/*.js'], dest: outputDir + pagesSubpath },
+        { src: ['./src' + pagesSubpath + '/**/*.html'], dest: outputDir + pagesSubpath },
       ]
     })
   ]

@@ -1,5 +1,8 @@
 import { html, reactive } from '@arrow-js/core'
 
+import '/src/styles/reset.css'
+import './calculator.css'
+
 const data = reactive({
   number: '',
   ops: [],
