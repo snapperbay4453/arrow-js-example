@@ -1,7 +1,7 @@
 // https://github.com/bennypowers/rollup-plugin-watch-assets
 
 import path from 'path';
-import globby from 'globby';
+import { globby } from 'globby';
 
 const unary = f => x => f(x);
 const resolve = unary(path.resolve);

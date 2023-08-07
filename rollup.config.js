@@ -1,7 +1,7 @@
 import alias from '@rollup/plugin-alias';
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
-import copy from 'rollup-plugin-copy';
+import { copy } from '@web/rollup-plugin-copy';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
@@ -18,21 +18,25 @@ const __dirname = path.dirname(__filename);
 import watchAssets from './rollup/plugins/watchAssets.js';
 
 const projectRootDir = path.resolve(__dirname);
-const outputDir = './dist'
-const pagesSubpath = '/pages'
+const sourceDir = './src'
+const targetDir = './dist'
+const pagesRootDir = '/pages'
 
-const pages = [
-  'home',
-  'calculator',
+const pagePaths = [
+  '/home',
+  '/examples/calculator',
+  '/examples/carousel',
+  '/examples/dropdowns',
+  '/examples/tabs',
 ]
 
 const targetExtensions = ['.js', '.jsx', '.ts', '.tsx']
 
-export default pages.map(page => ({
-  input: './src' + pagesSubpath + '/' + page + '.js',
+export default pagePaths.map(pagePath => ({
+  input: path.join(sourceDir, pagesRootDir, pagePath + '.js'),
   output: {
     format: 'es',
-    dir: outputDir + pagesSubpath,
+    dir: path.dirname(path.join(targetDir, pagesRootDir, pagePath + '.js')),
   },
   watch: {
     include: './src/**/*',
@@ -50,7 +54,8 @@ export default pages.map(page => ({
     }),
     babel({
       babelHelpers: 'runtime',
-      exclude: 'node_modules/**',
+      skipPreflightCheck: true,
+      exclude: '/^(.+\/)?node_modules\/.+$/',
       extensions: targetExtensions
     }),
     nodeResolve({
@@ -68,9 +73,9 @@ export default pages.map(page => ({
     }),
     terser(),
     copy({
-      targets: [
-        { src: ['./src' + pagesSubpath + '/**/*.html'], dest: outputDir + pagesSubpath },
-      ]
+      rootDir: `${path.dirname(path.join(sourceDir, pagesRootDir, pagePath + '.js'))}`,
+      patterns: `*.{html,jpg,json,svg}`,
+      exclude: 'node_modules',
     })
   ]
 }));
