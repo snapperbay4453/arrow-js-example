@@ -24,6 +24,7 @@ const pagesRootDir = '/pages'
 
 const pagePaths = [
   '/home',
+  '/dev/dog',
   '/examples/calculator',
   '/examples/carousel',
   '/examples/dropdowns',
@@ -59,6 +60,8 @@ export default pagePaths.map(pagePath => ({
       extensions: targetExtensions
     }),
     nodeResolve({
+      preferBuiltins: true,
+      browser: true,
       extensions: targetExtensions,
     }),
     commonjs({
